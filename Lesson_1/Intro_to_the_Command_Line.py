@@ -28,7 +28,7 @@ ENVIRONMENT VARIABLES AND YOU
             For more persistent variables (variables that exist between sessions), variables can be added to environment files that are automatically run when a terminal window is opened. 
                 - examples of environment files are .bashrc, .bash_profile, .zshrc, and .zprofile. The environment file name depends on the flavor of shell you are using (bash, zsh, etc.)
                 - syntax inside the . (hidden) files goes like this: 
-                    Bash: export <variable_name>=<value>
+                    Bash/zsh: export <variable_name>=<value>
                 - special characters
                     \h     Hostname
                     \u     User name
