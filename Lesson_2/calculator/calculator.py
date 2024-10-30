@@ -1,22 +1,45 @@
-# ask the user for the first number
-# ask the user for the second number
-# ask the user for the type of operation to perform: add, subtract, multiply, or 
-# divide
-# perform the calculation and display the result
+def prompt(message):
+    print(f"==> {message}")
 
-print('Welcome to Calculator!')
-first_number = input('Enter the first number:\n')
-second_number = input('Enter the second number:\n')
-operation = input('1) add, 2) subtract, 3) multiply, 4) divide \n')
+def invalid_number(number_str):
+    try:
+        int(number_str)
+    except ValueError:
+        return True
+
+    return False
+
+prompt('Welcome to Calculator!')
+
+prompt("What's the first number?")
+number1 = input()
+
+while invalid_number(number1):
+    prompt("Hmm... that doesn't look like a valid number.")
+    number1 = input()
+
+prompt("What's the second number?")
+number2 = input()
+
+while invalid_number(number2):
+    prompt("Hmm... that doesn't look like a valid number.")
+    number2 = input()
+
+prompt("What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide")
+operation = input()
+
+while operation not in ["1", "2", "3", "4"]:
+    prompt("You must choose 1, 2, 3, or 4")
+    operation = input()
 
 match operation:
-    case '1':
-        result = float(first_number) + float(second_number)
-    case '2':
-        result = float(first_number) - float(second_number)
-    case '3':
-        result = float(first_number) * float(second_number)
-    case '4':
-        result = float(first_number) / float(second_number)
+    case "1":
+        output = int(number1) + int(number2)
+    case "2":
+        output = int(number1) - int(number2)
+    case "3":
+        output = int(number1) * int(number2)
+    case "4":
+        output = int(number1) / int(number2)
 
-print(f'\n{result} is the result.')
+prompt(f"The result is {output}")
