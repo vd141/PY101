@@ -9,6 +9,17 @@ def invalid_number(number_str):
 
     return False
 
+messages = {
+            'welcome': 'Welcome to Calculator!',
+            'first_num': 'What\'s the first number?',
+            'invalid_num': 'Hmm... that doesn\'t look like a valid number.',
+            'second_num': 'What\'s the second number?',
+            'operation_prompt': 'What operation would you like to perform?\n'
+                                '1) Add 2) Subtract 3) Multiply 4) Divide',
+            'valid_operations': 'You must choose 1, 2, 3, or 4',
+            'reuse_calc': 'Would you like to use Calculator again? y/n',
+}
+
 prompt('Welcome to Calculator!')
 
 re_prompt = True
@@ -47,7 +58,8 @@ while re_prompt:
 
     prompt(f"The result is {output}")
 
-    ask_for_relcalculation = input('==> Would you like to use the calculator again? y/n\n')
+    prompt('Would you like to use the calculator again? y/n\n')
+    ask_for_relcalculation = input()
 
     match ask_for_relcalculation:
         case 'y':
