@@ -1,0 +1,74 @@
+START
+# a function that returns the sum of two numbers
+
+DEFINE sum_of_two_numbers
+GET number_1
+GET number_2
+SET sum = number_1 + number_2
+PRINT sum
+END
+
+START
+# a function that takes a list of strings, and returns a string that is all those strings
+# concatenated together
+
+DEFINE concatenated
+GET list1
+SET iterator = 0
+SET list_length = length(list)
+SET new_string = ''
+WHILE iterator < list_length
+    new_string = new_string + list1[iterator]
+    iterator = iterator + 1
+PRINT new_string
+END
+
+START
+# a function that takes a list of integers and returns a new list with every other element
+# from the original list, starting with the first element
+
+DEFINE every_other
+GET list1
+SET iterator = 0
+SET new_list = []
+WHILE iterator < length(list1)
+    new_list = new_list + list1[iterator]
+    iterator = iterator + 2
+PRINT new_list
+END
+
+START
+# a function that determines the 3rd occurence of a given character in a string.
+# for instance, if the given character is 'x' and the string is 'axbxcdxex', the
+# function should return 6 (the index of the 3rd 'x'). If the given character
+# does not occur at least 3 times, return None
+
+GET given_character
+GET string
+SET count = 0
+SET iterator = 0
+WHILE iterator < length(string)
+    if string[iterator] == given_character 
+        count = count + 1
+    if count == 3
+        return iterator
+return None
+END
+
+START
+# a function that takes two lists of numbers and returns the result of merging
+# the lists. the elements of the first list should become the elements at the 
+# even indexes of the returned list, while the elements of the second list 
+# should become the elements at the odd indexes
+# you may assume that both lists are the same length
+DEFINE merge
+GET list1
+GET list2
+SET length = length(list1)
+SET iterator = 0
+SET new_list = []
+WHILE iterator < length
+    new_list = new_list + [list1[iterator]] + [list2[iterator]]
+    iterator = iterator + 1
+PRINT new_list
+END
