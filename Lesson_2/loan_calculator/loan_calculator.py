@@ -14,9 +14,36 @@ ask the user for the APR in percentage points
 ask the user for the loan duration in months
 '''
 
+# TODO: handle edge cases for inputs
+#       - invalid inputs such as: non-numeric values, non-positive numbers
+# TODO: reprompt when input is invalid
+# TODO: reprompt for another calculation
+# TODO: encapsulate code in custom functions
+
+def valid_input(num):
+    try:
+        num = float(num)
+        if num <= 0:
+            print(f'==> {num} is invalid. Please enter a positive number.')
+            return False
+    except ValueError:
+        print(f'==> {num} is invalid. Please enter a numeric value.')
+        return False
+    else:
+        return True
+
 loan_dollars = input('==> Please enter the dollar amount of the loan:\n')
+while not valid_input(loan_dollars):
+    loan_dollars = input('==> Please enter the dollar amount of the loan:\n')
+
 apr_percent = input('==> Please enter the APR of the loan (e.g. 5 for 5%):\n')
+while not valid_input(apr_percent):
+    apr_percent = input('==> Please enter the APR of the loan (e.g. 5 for 5%):\n')
+
 loan_months = input('==> Please enter the duration of the loan in whole '
+                    'months:\n')
+while not valid_input(loan_months):
+    loan_months = input('==> Please enter the duration of the loan in whole '
                     'months:\n')
 
 loan_dollars = float(loan_dollars)
@@ -30,3 +57,4 @@ monthly_payment = loan_dollars * (monthly_interest_rate /
                                    ** -loan_months))
 
 print(f'The monthly payment is ${monthly_payment:.2f}.')
+
