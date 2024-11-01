@@ -14,10 +14,6 @@ ask the user for the APR in percentage points
 ask the user for the loan duration in months
 '''
 
-# TODO: handle edge cases for inputs
-#       - invalid inputs such as: non-numeric values, non-positive numbers
-# TODO: reprompt when input is invalid
-# TODO: reprompt for another calculation
 # TODO: encapsulate code in custom functions
 
 def valid_input(num):
@@ -31,30 +27,40 @@ def valid_input(num):
         return False
     else:
         return True
+    
+reuse_calc = True
+print('==> Welcome to Loan Calculator!')
 
-loan_dollars = input('==> Please enter the dollar amount of the loan:\n')
-while not valid_input(loan_dollars):
+while reuse_calc:
     loan_dollars = input('==> Please enter the dollar amount of the loan:\n')
+    while not valid_input(loan_dollars):
+        loan_dollars = input('==> Please enter the dollar amount of the loan:\n')
 
-apr_percent = input('==> Please enter the APR of the loan (e.g. 5 for 5%):\n')
-while not valid_input(apr_percent):
     apr_percent = input('==> Please enter the APR of the loan (e.g. 5 for 5%):\n')
+    while not valid_input(apr_percent):
+        apr_percent = input('==> Please enter the APR of the loan (e.g. 5 for 5%):\n')
 
-loan_months = input('==> Please enter the duration of the loan in whole '
-                    'months:\n')
-while not valid_input(loan_months):
     loan_months = input('==> Please enter the duration of the loan in whole '
-                    'months:\n')
+                        'months:\n')
+    while not valid_input(loan_months):
+        loan_months = input('==> Please enter the duration of the loan in whole '
+                        'months:\n')
 
-loan_dollars = float(loan_dollars)
-apr_percent = float(apr_percent)
-loan_months = int(loan_months)
+    loan_dollars = float(loan_dollars)
+    apr_percent = float(apr_percent)
+    loan_months = int(loan_months)
 
-monthly_interest_rate = apr_percent/(12 * 100)
+    monthly_interest_rate = apr_percent/(12 * 100)
 
-monthly_payment = loan_dollars * (monthly_interest_rate /
-                                  (1 - (1 + monthly_interest_rate)
-                                   ** -loan_months))
+    monthly_payment = loan_dollars * (monthly_interest_rate /
+                                    (1 - (1 + monthly_interest_rate)
+                                    ** -loan_months))
 
-print(f'The monthly payment is ${monthly_payment:.2f}.')
+    print(f'==> The monthly payment is ${monthly_payment:.2f}.')
 
+    reuse_calc_input = input('==> Would you like to use '
+                    'the loan_calculator again? y/n\n')
+
+    if reuse_calc_input != 'y':
+        print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
+        reuse_calc = False
