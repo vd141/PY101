@@ -17,6 +17,10 @@ ask the user for the loan duration in months
 # TODO: encapsulate code in custom functions
 
 def valid_input(num):
+    '''
+    Checks if num string can be coerced into a float. If so, checks if float is
+    non-negative.
+    '''
     try:
         num = float(num)
         if num <= 0:
@@ -25,9 +29,8 @@ def valid_input(num):
     except ValueError:
         print(f'==> {num} is invalid. Please enter a numeric value.')
         return False
-    else:
-        return True
-    
+    return True
+
 reuse_calc = True
 print('==> Welcome to Loan Calculator!')
 
