@@ -9,9 +9,9 @@ def crunch(string):
     no_dupes = []
     prev_char = None
 
-    for i in string:
-        if i != prev_char:
-            prev_char = i
+    for char in string:
+        if char != prev_char:
+            prev_char = char
             no_dupes.append(i)
 
     return ''.join(no_dupes)
