@@ -3,10 +3,8 @@
 def stringy(length):
     binary = []
     for i in range(length):
-        if i % 2 == 0:
-            binary.append('1')
-        else:
-            binary.append('0')
+        digit = '1' if i % 2 == 0 else '0'
+        binary.append(digit)
     return ''.join(binary)
 
 print(stringy(6) == "101010")           # True
