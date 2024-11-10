@@ -87,6 +87,6 @@ while True:
     reuse_calc_input = input('==> Would you like to use '
                     'the loan_calculator again? y/n\n')
 
-    if reuse_calc_input != 'y':
+    if reuse_calc_input.lower() != 'y':
         print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
         break
