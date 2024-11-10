@@ -66,10 +66,9 @@ def get_loan_months():
     return float(loan_months_input)
 
 
-reuse_calc = True
 print('==> Welcome to Loan Calculator!')
 
-while reuse_calc:
+while True:
     loan_dollars = get_loan_dollars()
 
     apr_percent = get_apr_percent()
@@ -90,4 +89,4 @@ while reuse_calc:
 
     if reuse_calc_input != 'y':
         print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
-        reuse_calc = False
+        break
