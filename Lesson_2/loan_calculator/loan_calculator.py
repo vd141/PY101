@@ -14,6 +14,9 @@ ask the user for the APR in percentage points
 ask the user for the loan duration in months
 '''
 
+MONTHS_IN_YEAR = 12
+PERCENT_DENONMINATOR = 100
+
 def valid_input(num):
     '''
     Checks if num string can be coerced into a float. If so, checks if float is
@@ -73,7 +76,8 @@ while reuse_calc:
 
     loan_months = get_loan_months()
 
-    monthly_interest_rate = apr_percent / (12 * 100)
+    monthly_interest_rate = apr_percent / (MONTHS_IN_YEAR * 
+                                           PERCENT_DENONMINATOR)
 
     monthly_payment = loan_dollars * (monthly_interest_rate /
                                     (1 - (1 + monthly_interest_rate)
