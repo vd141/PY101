@@ -55,11 +55,11 @@ def get_loan_months():
     '''
     gets loan duration in months from user and reprompts if input is invalid
     '''
-    loan_months_input = input('==> Please enter the duration of the loan in whole '
-                        'months:\n')
-    while not valid_input(loan_months_input):
-        loan_months_input = input('==> Please enter the duration of the loan in '
+    loan_months_input = input('==> Please enter the duration of the loan in '
                         'whole months:\n')
+    while not valid_input(loan_months_input):
+        loan_months_input = input('==> Please enter the duration of the loan '
+                        'in whole months:\n')
     return float(loan_months_input)
 
 
