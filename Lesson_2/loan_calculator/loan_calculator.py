@@ -14,10 +14,12 @@ ask the user for the APR in percentage points
 ask the user for the loan duration in months
 '''
 
+import os
+
 MONTHS_IN_YEAR = 12
 PERCENT_DENONMINATOR = 100
 
-def valid_input(num):
+def valid_positive_float_input(num):
     '''
     Checks if num string can be coerced into a float. If so, checks if float is
     non-negative.
@@ -38,7 +40,7 @@ def get_loan_dollars():
     '''
     loan_dollars_input = input('==> Please enter the dollar amount of the '
                          'loan:\n')
-    while not valid_input(loan_dollars_input):
+    while not valid_positive_float_input(loan_dollars_input):
         loan_dollars_input = input('==> Please enter the dollar amount of the '
                              'loan:\n')
     return float(loan_dollars_input)
@@ -49,7 +51,7 @@ def get_apr_percent():
     '''
     apr_percent_input = input('==> Please enter the APR of the loan '
                         '(e.g. 5 for 5%):\n')
-    while not valid_input(apr_percent_input):
+    while not valid_positive_float_input(apr_percent_input):
         apr_percent_input = input('==> Please enter the APR of the loan '
                             '(e.g. 5 for 5%):\n')
     return float(apr_percent_input)
@@ -60,22 +62,27 @@ def get_loan_months():
     '''
     loan_months_input = input('==> Please enter the duration of the loan in '
                         'whole months:\n')
-    while not valid_input(loan_months_input):
+    while not valid_positive_float_input(loan_months_input):
         loan_months_input = input('==> Please enter the duration of the loan '
                         'in whole months:\n')
     return float(loan_months_input)
 
-
-print('==> Welcome to Loan Calculator!')
+def reuse_calc_input():
+    return (True if 'y' in input('==> Would you like to use the loan calculator'
+                                ' again? y/n\n') else False)
 
 while True:
+    os.system('clear')
+
+    print('==> Welcome to Loan Calculator!')
+
     loan_dollars = get_loan_dollars()
 
     apr_percent = get_apr_percent()
 
     loan_months = get_loan_months()
 
-    monthly_interest_rate = apr_percent / (MONTHS_IN_YEAR * 
+    monthly_interest_rate = apr_percent / (MONTHS_IN_YEAR *
                                            PERCENT_DENONMINATOR)
 
     monthly_payment = loan_dollars * (monthly_interest_rate /
@@ -84,9 +91,6 @@ while True:
 
     print(f'==> The monthly payment is ${monthly_payment:.2f}.')
 
-    reuse_calc_input = input('==> Would you like to use '
-                    'the loan_calculator again? y/n\n')
-
-    if reuse_calc_input.casefold() != 'y':
+    if not reuse_calc_input():
         print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
         break
