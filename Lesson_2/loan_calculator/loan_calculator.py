@@ -59,19 +59,25 @@ def get_loan_months():
     gets loan duration in months from user and reprompts if input is invalid
     '''
     while True:
-        loan_months_input = input('==> Please enter the duration of the loan in '
-                                  'whole months:\n')
+        loan_months_input = input('==> Please enter the duration of the loan in'
+                                  ' whole months:\n')
         if valid_positive_float_input(loan_months_input):
             return float(loan_months_input)
 
 def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
-    return loan_dollars * (monthly_interest_rate /
+    '''
+    Calculates and returns the monthly payment from the three parameters
+    '''
+    return (loan_dollars * (monthly_interest_rate /
                                     (1 - (1 + monthly_interest_rate)
-                                    ** -loan_months))
+                                    ** -loan_months)))
 
 def reuse_calc_input():
+    '''
+    Returns True if the input contains a 'y', False if it does not
+    '''
     return (True if 'y' in input('==> Would you like to use the loan calculator'
-                                ' again? y/n\n') else False)
+                                 ' again? y/n\n') else False)
 
 while True:
     os.system('clear')
@@ -87,7 +93,7 @@ while True:
     monthly_interest_rate = apr_percent / (MONTHS_IN_YEAR *
                                            PERCENT_DENONMINATOR)
 
-    monthly_payment = calculate_monthly_payment(loan_dollars, 
+    monthly_payment = calculate_monthly_payment(loan_dollars,
                                                 monthly_interest_rate,
                                                 loan_months)
 
@@ -96,8 +102,3 @@ while True:
     if not reuse_calc_input():
         print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
         break
-
-# renamed validation function from valid_input to valid_positive_float_input
-# added function to prompt user for calculator reuse
-# removed trailing whitespace character
-# 
