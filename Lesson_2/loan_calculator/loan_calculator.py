@@ -67,6 +67,11 @@ def get_loan_months():
                         'in whole months:\n')
     return float(loan_months_input)
 
+def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
+    return loan_dollars * (monthly_interest_rate /
+                                    (1 - (1 + monthly_interest_rate)
+                                    ** -loan_months))
+
 def reuse_calc_input():
     return (True if 'y' in input('==> Would you like to use the loan calculator'
                                 ' again? y/n\n') else False)
@@ -85,12 +90,17 @@ while True:
     monthly_interest_rate = apr_percent / (MONTHS_IN_YEAR *
                                            PERCENT_DENONMINATOR)
 
-    monthly_payment = loan_dollars * (monthly_interest_rate /
-                                    (1 - (1 + monthly_interest_rate)
-                                    ** -loan_months))
+    monthly_payment = calculate_monthly_payment(loan_dollars, 
+                                                monthly_interest_rate,
+                                                loan_months)
 
     print(f'==> The monthly payment is ${monthly_payment:.2f}.')
 
     if not reuse_calc_input():
         print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
         break
+
+# renamed validation function from valid_input to valid_positive_float_input
+# added function to prompt user for calculator reuse
+# removed trailing whitespace character
+# 
