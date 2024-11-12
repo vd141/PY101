@@ -38,34 +38,31 @@ def get_loan_dollars():
     '''
     Gets loan amount from user and reprompts if input is invalid
     '''
-    loan_dollars_input = input('==> Please enter the dollar amount of the '
-                         'loan:\n')
-    while not valid_positive_float_input(loan_dollars_input):
+    while True:
         loan_dollars_input = input('==> Please enter the dollar amount of the '
-                             'loan:\n')
-    return float(loan_dollars_input)
+                                   'loan:\n')
+        if valid_positive_float_input(loan_dollars_input):
+            return float(loan_dollars_input)
 
 def get_apr_percent():
     '''
     Gets apr percent from user and reprompts if input is invalid
     '''
-    apr_percent_input = input('==> Please enter the APR of the loan '
-                        '(e.g. 5 for 5%):\n')
-    while not valid_positive_float_input(apr_percent_input):
+    while True:
         apr_percent_input = input('==> Please enter the APR of the loan '
-                            '(e.g. 5 for 5%):\n')
-    return float(apr_percent_input)
+                                  '(e.g. 5 for 5%):\n')
+        if valid_positive_float_input(apr_percent_input):
+            return float(apr_percent_input)
 
 def get_loan_months():
     '''
     gets loan duration in months from user and reprompts if input is invalid
     '''
-    loan_months_input = input('==> Please enter the duration of the loan in '
-                        'whole months:\n')
-    while not valid_positive_float_input(loan_months_input):
-        loan_months_input = input('==> Please enter the duration of the loan '
-                        'in whole months:\n')
-    return float(loan_months_input)
+    while True:
+        loan_months_input = input('==> Please enter the duration of the loan in '
+                                  'whole months:\n')
+        if valid_positive_float_input(loan_months_input):
+            return float(loan_months_input)
 
 def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
     return loan_dollars * (monthly_interest_rate /
