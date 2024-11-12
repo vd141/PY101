@@ -77,14 +77,16 @@ def valid_calc_reuse(input):
     '''
     validate calculator reuse input
     '''
-    return True if 
+    return (True if input in ['y', 'Y', 'Yes', 'Ye'] else False)
 
 def reuse_calc_input():
     '''
     Returns True if the input contains a 'y', False if it does not
     '''
-    return (True if 'y' in input('==> Would you like to use the loan calculator'
-                                 ' again? y/n\n') else False)
+    while True:
+        reuse_calc_input = input('==> Would you like to use the loan calculator'
+                                 ' again? y/n\n')
+        
 
 def closing_countdown_timer(seconds):
     '''
