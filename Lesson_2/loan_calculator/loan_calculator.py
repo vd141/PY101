@@ -73,6 +73,12 @@ def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
                                     (1 - (1 + monthly_interest_rate)
                                     ** -loan_months)))
 
+def valid_calc_reuse(input):
+    '''
+    validate calculator reuse input
+    '''
+    return True if 
+
 def reuse_calc_input():
     '''
     Returns True if the input contains a 'y', False if it does not
@@ -81,6 +87,9 @@ def reuse_calc_input():
                                  ' again? y/n\n') else False)
 
 def closing_countdown_timer(seconds):
+    '''
+    Counts down from the number of seconds and clears the console.
+    '''
     print('==> I hope you enjoyed using Loan Calculator. Closing in...')
     for second in range(seconds, 0, -1):
         time.sleep(1)
