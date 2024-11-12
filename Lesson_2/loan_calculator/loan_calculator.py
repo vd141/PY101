@@ -15,6 +15,7 @@ ask the user for the loan duration in months
 '''
 
 import os
+import time
 
 MONTHS_IN_YEAR = 12
 PERCENT_DENONMINATOR = 100
@@ -79,6 +80,17 @@ def reuse_calc_input():
     return (True if 'y' in input('==> Would you like to use the loan calculator'
                                  ' again? y/n\n') else False)
 
+def closing_countdown_timer(seconds):
+    print('==> I hope you enjoyed using Loan Calculator. Closing in...')
+    for second in range(seconds, 0, -1):
+        time.sleep(1)
+        print(second)
+    time.sleep(1)
+    print('Goodbye!')
+    time.sleep(2)
+    os.system('clear')
+
+
 while True:
     os.system('clear')
 
@@ -100,5 +112,5 @@ while True:
     print(f'==> The monthly payment is ${monthly_payment:.2f}.')
 
     if not reuse_calc_input():
-        print('==> I hope you enjoyed using Loan Calculator. Goodbye.')
+        closing_countdown_timer(5)
         break
