@@ -23,12 +23,27 @@ PERCENT_DENONMINATOR = 100
 def valid_positive_float_input(num):
     '''
     Checks if num string can be coerced into a float. If so, checks if float is
-    non-negative.
+    positive.
     '''
     try:
         num = float(num)
         if num <= 0:
             print(f'==> {num} is invalid. Please enter a positive number.')
+            return False
+    except ValueError:
+        print(f'==> {num} is invalid. Please enter a numeric value.')
+        return False
+    return True
+
+def valid_nonnegative_float_input(num):
+    '''
+    Checks if num string can be coerced into a float. If so, checks if float is
+    positive.
+    '''
+    try:
+        num = float(num)
+        if num < 0:
+            print(f'==> {num} is invalid. Please enter a nonnegative number.')
             return False
     except ValueError:
         print(f'==> {num} is invalid. Please enter a numeric value.')
@@ -52,7 +67,7 @@ def get_apr_percent():
     while True:
         apr_percent_input = input('==> Please enter the APR of the loan '
                                   '(e.g. 5 for 5%):\n')
-        if valid_positive_float_input(apr_percent_input):
+        if valid_nonnegative_float_input(apr_percent_input):
             return float(apr_percent_input)
 
 def get_loan_months():
@@ -69,9 +84,12 @@ def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
     '''
     Calculates and returns the monthly payment from the three parameters
     '''
-    return (loan_dollars * (monthly_interest_rate /
-                                    (1 - (1 + monthly_interest_rate)
-                                    ** -loan_months)))
+    if monthly_interest_rate > 0:
+        return (loan_dollars * (monthly_interest_rate /
+                                (1 - (1 + monthly_interest_rate)
+                                ** -loan_months)))
+    else:
+        return (loan_dollars / loan_months)
 
 def valid_calc_reuse(input):
     '''
