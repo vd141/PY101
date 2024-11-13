@@ -75,18 +75,25 @@ def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
 
 def valid_calc_reuse(input):
     '''
-    validate calculator reuse input
+    validate calculator reuse input. Returns True if input is valid, returns
+    False if not
     '''
-    return (True if input in ['y', 'Y', 'Yes', 'Ye'] else False)
+    if input in ['y', 'n']:
+        return True
+    print('Invalid input. Please enter y/n.')
+    return False
 
-def reuse_calc_input():
+def reuse_calc():
     '''
-    Returns True if the input contains a 'y', False if it does not
+    Returns True if the input is 'y', False if it does not
     '''
     while True:
         reuse_calc_input = input('==> Would you like to use the loan calculator'
                                  ' again? y/n\n')
-        
+        if valid_calc_reuse(reuse_calc_input):
+            if reuse_calc_input == 'y':
+                return True
+            return False
 
 def closing_countdown_timer(seconds):
     '''
@@ -98,7 +105,7 @@ def closing_countdown_timer(seconds):
         print(second)
     time.sleep(1)
     print('Goodbye!')
-    time.sleep(2)
+    time.sleep(1.5)
     os.system('clear')
 
 
@@ -122,6 +129,7 @@ while True:
 
     print(f'==> The monthly payment is ${monthly_payment:.2f}.')
 
-    if not reuse_calc_input():
-        closing_countdown_timer(5)
-        break
+    if reuse_calc():
+        continue
+    closing_countdown_timer(3)
+    break
