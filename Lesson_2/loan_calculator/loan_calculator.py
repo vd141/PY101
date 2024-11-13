@@ -23,27 +23,12 @@ PERCENT_DENONMINATOR = 100
 def valid_positive_float_input(num):
     '''
     Checks if num string can be coerced into a float. If so, checks if float is
-    greater than 0.
+    non-negative.
     '''
     try:
         num = float(num)
         if num <= 0:
             print(f'==> {num} is invalid. Please enter a positive number.')
-            return False
-    except ValueError:
-        print(f'==> {num} is invalid. Please enter a numeric value.')
-        return False
-    return True
-
-def valid_nonnegative_float_input(num):
-    '''
-    Checks if num string can be coerced into a float. If so, checks if float is
-    non-negative.
-    '''
-    try:
-        num = float(num)
-        if num < 0:
-            print(f'==> {num} is invalid. Please enter a nonnegative number.')
             return False
     except ValueError:
         print(f'==> {num} is invalid. Please enter a numeric value.')
@@ -67,7 +52,7 @@ def get_apr_percent():
     while True:
         apr_percent_input = input('==> Please enter the APR of the loan '
                                   '(e.g. 5 for 5%):\n')
-        if valid_nonnegative_float_input(apr_percent_input):
+        if valid_positive_float_input(apr_percent_input):
             return float(apr_percent_input)
 
 def get_loan_months():
@@ -82,22 +67,18 @@ def get_loan_months():
 
 def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
     '''
-    Calculates and returns the monthly payment from the three parameters. Can
-    accept a 0 APR loan.
+    Calculates and returns the monthly payment from the three parameters
     '''
-    if monthly_interest_rate > 0:
-        return (loan_dollars * (monthly_interest_rate /
-                                (1 - (1 + monthly_interest_rate)
-                                ** -loan_months)))
-    else:
-        return (loan_dollars / loan_months)
+    return (loan_dollars * (monthly_interest_rate /
+                                    (1 - (1 + monthly_interest_rate)
+                                    ** -loan_months)))
 
-def valid_calc_reuse(input_):
+def valid_calc_reuse(input):
     '''
     validate calculator reuse input. Returns True if input is valid, returns
     False if not
     '''
-    if input_ in ['y', 'n']:
+    if input in ['y', 'n']:
         return True
     print('Invalid input. Please enter y/n.')
     return False
