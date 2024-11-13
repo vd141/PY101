@@ -8,7 +8,7 @@ import random
 import os
 import time
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+VALID_CHOICES = ['rock', 'paper', 'scissors', 'lizard', 'spock']
 
 def determine_winner(player_choice, computer_choice):
     '''
@@ -44,7 +44,8 @@ while True:
 
     computer_choice = random.choice(VALID_CHOICES)
 
-    print(f'==> You chose {player_choice}, the computer chose {computer_choice}.')
+    print(f'==> You chose {player_choice}, the computer chose'
+          ' {computer_choice}.')
 
     determine_winner(player_choice, computer_choice)
 
