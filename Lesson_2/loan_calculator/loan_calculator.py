@@ -27,7 +27,7 @@ def valid_positive_float_input(num):
     '''
     try:
         num = float(num)
-        if num <= 0:
+        if num <= 0 or num == float('inf') or num != num:
             print(f'==> {num} is invalid. Please enter a positive number.')
             return False
     except ValueError:
@@ -42,7 +42,7 @@ def valid_nonnegative_float_input(num):
     '''
     try:
         num = float(num)
-        if num < 0:
+        if num < 0 or num == float('inf') or num != num:
             print(f'==> {num} is invalid. Please enter a nonnegative number.')
             return False
     except ValueError:
@@ -76,7 +76,7 @@ def get_loan_months():
     '''
     while True:
         loan_months_input = input('==> Please enter the duration of the loan in'
-                                  ' whole months:\n')
+                                  ' months:\n')
         if valid_positive_float_input(loan_months_input):
             return float(loan_months_input)
 
