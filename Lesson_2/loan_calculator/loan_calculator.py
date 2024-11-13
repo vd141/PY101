@@ -88,15 +88,14 @@ def calculate_monthly_payment(loan_dollars, monthly_interest_rate, loan_months):
         return (loan_dollars * (monthly_interest_rate /
                                 (1 - (1 + monthly_interest_rate)
                                 ** -loan_months)))
-    else:
-        return (loan_dollars / loan_months)
+    return loan_dollars / loan_months
 
-def valid_calc_reuse(input):
+def valid_calc_reuse(input_):
     '''
     validate calculator reuse input. Returns True if input is valid, returns
     False if not
     '''
-    if input in ['y', 'n']:
+    if input_ in ['y', 'n']:
         return True
     print('Invalid input. Please enter y/n.')
     return False
