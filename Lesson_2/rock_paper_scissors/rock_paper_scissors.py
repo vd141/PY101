@@ -126,7 +126,7 @@ while True:
 
     if user_plays_again.lower() == 'n':
         determine_game_winner(cumulative_results)
-        print('==> Thanks for playing. Closing program.')
-        time.sleep(1.5)
+        print('==> Thanks for playing. Closing program...')
+        time.sleep(4)
         os.system('clear')
         break
