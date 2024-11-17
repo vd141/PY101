@@ -98,6 +98,7 @@ while True:
         player_choice = input((f'==> Please choose one: '
                               f'{', '.join(VALID_CHOICES_SHORTCUTS)} for'
                               f' {', '.join(VALID_CHOICES_VALUES)}\n'))
+        player_choice = player_choice.lower()
         if player_choice in VALID_CHOICES_SHORTCUTS:
             break
         print('==> That wasn\'t a valid choice.')
