@@ -25,6 +25,12 @@ VALID_CHOICES = {'r': 'rock',
                  }
 VALID_CHOICES_SHORTCUTS = list(VALID_CHOICES.keys())
 VALID_CHOICES_VALUES = list(VALID_CHOICES.values())
+WINNING_COMBOS = {'rock': ['scissors', 'lizard'], # key beats values
+                  'paper': ['rock', 'spock'],
+                  'scissors': ['paper', 'lizard'],
+                  'spock': ['scissors', 'rock'],
+                  'lizard': ['paper', 'spock'],
+                  }
 
 
 def player_chooses():
@@ -68,36 +74,15 @@ def determine_round_winner(player_choice, computer_choice):
     computer wins: [0, 1]
     tie:           [0, 0]
     '''
-    # player win conditions
-    if ((player_choice == 'rock' and computer_choice == 'scissors') or
-        (player_choice == 'rock' and computer_choice == 'lizard') or
-        (player_choice == 'paper' and computer_choice == 'rock') or
-        (player_choice == 'paper' and computer_choice == 'spock') or
-        (player_choice == 'scissors' and computer_choice == 'paper') or
-        (player_choice == 'scissors' and computer_choice == 'lizard') or
-        (player_choice == 'spock' and computer_choice == 'scissors') or
-        (player_choice == 'spock' and computer_choice == 'rock') or
-        (player_choice == 'lizard' and computer_choice == 'paper') or
-        (player_choice == 'lizard' and computer_choice == 'spock')):
-        print('==> You won the round!')
-        return [1, 0]
-    # computer win conditions
-    if ((player_choice == 'rock' and computer_choice == 'spock') or
-        (player_choice == 'rock' and computer_choice == 'paper') or
-        (player_choice == 'paper' and computer_choice == 'lizard') or
-        (player_choice == 'paper' and computer_choice == 'scissors') or
-        (player_choice == 'scissors' and computer_choice == 'spock') or
-        (player_choice == 'scissors' and computer_choice == 'rock') or
-        (player_choice == 'spock' and computer_choice == 'lizard') or
-        (player_choice == 'spock' and computer_choice == 'paper') or
-        (player_choice == 'lizard' and computer_choice == 'rock') or
-        (player_choice == 'lizard' and computer_choice == 'scissors')):
-        print('==> Computer won the round!')
-        return [0, 1]
-    # tie
-    else:
+
+    if player_choice == computer_choice:
         print('==> That round ended in a tie!')
         return [0, 0]
+    if computer_choice in WINNING_COMBOS[player_choice]:
+        print('==> You won the round!')
+        return [1, 0]
+    print('==> Computer won the round!')
+    return [0, 1]
 
 
 def tally_score(result, cumulative_results):
@@ -159,10 +144,12 @@ def display_game_end_sequence(cumulative_results):
     Print final results and prepare to end game.
     '''
     print_game_winner(cumulative_results)
-    print(f'==> Thanks for playing. Closing program in...')
+    print('==> Thanks for playing. Closing program in...')
     for second in range(CLOSING_SECONDS, -1, -1):
         print(f'\r{second} seconds', end = '')
         time.sleep(1)
+    print('\nGoodbye!')
+    time.sleep(1)
     os.system('clear')
 
 
