@@ -87,46 +87,48 @@ def determine_game_winner(cumulative_results):
         print(f'==> You and the computer tied '
               f'{'-'.join(str_cumulative_results)}!')
 
-cumulative_results = [0, 0]
+def play_game():
 
-# game
-while True:
-    os.system('clear')
+    cumulative_results = [0, 0]
 
-    # user chooses from valid choices
+    # game
     while True:
-        player_choice = input((f'==> Please choose one: '
-                              f'{', '.join(VALID_CHOICES_SHORTCUTS)} for'
-                              f' {', '.join(VALID_CHOICES_VALUES)}\n'))
-        player_choice = player_choice.lower()
-        if player_choice in VALID_CHOICES_SHORTCUTS:
-            break
-        print('==> That wasn\'t a valid choice.')
-
-    computer_choice = random.choice(VALID_CHOICES_VALUES)
-
-    print(f'==> You chose {VALID_CHOICES[player_choice]}, the computer chose'
-          f' {computer_choice}.')
-
-    result = determine_round_winner(VALID_CHOICES[player_choice], computer_choice)
-    tally_score(result, cumulative_results)
-
-    if (cumulative_results[0] == 3) or (cumulative_results[1] == 3):
-        determine_game_winner(cumulative_results)
-        break
-
-    # user decides whether to continue playing the game or to stop
-    while True:
-        print(f'==> The score is currently:\n==> You: {cumulative_results[0]} '
-              f'Computer: {cumulative_results[1]}')
-        user_plays_again = input('==> Do you want to play again? y/n\n')
-        if user_plays_again.lower() in ['y', 'n']:
-            break
-        print('==> Invalid input. Please enter y/n')
-
-    if user_plays_again.lower() == 'n':
-        determine_game_winner(cumulative_results)
-        print('==> Thanks for playing. Closing program...')
-        time.sleep(4)
         os.system('clear')
-        break
+
+        # user chooses from valid choices
+        while True:
+            player_choice = input((f'==> Please choose one: '
+                                f'{', '.join(VALID_CHOICES_SHORTCUTS)} for'
+                                f' {', '.join(VALID_CHOICES_VALUES)}\n'))
+            player_choice = player_choice.lower()
+            if player_choice in VALID_CHOICES_SHORTCUTS:
+                break
+            print('==> That wasn\'t a valid choice.')
+
+        computer_choice = random.choice(VALID_CHOICES_VALUES)
+
+        print(f'==> You chose {VALID_CHOICES[player_choice]}, the computer chose'
+            f' {computer_choice}.')
+
+        result = determine_round_winner(VALID_CHOICES[player_choice], computer_choice)
+        tally_score(result, cumulative_results)
+
+        if (cumulative_results[0] == 3) or (cumulative_results[1] == 3):
+            determine_game_winner(cumulative_results)
+            break
+
+        # user decides whether to continue playing the game or to stop
+        while True:
+            print(f'==> The score is currently:\n==> You: {cumulative_results[0]} '
+                f'Computer: {cumulative_results[1]}')
+            user_plays_again = input('==> Do you want to play again? y/n\n')
+            if user_plays_again.lower() in ['y', 'n']:
+                break
+            print('==> Invalid input. Please enter y/n')
+
+        if user_plays_again.lower() == 'n':
+            determine_game_winner(cumulative_results)
+            print('==> Thanks for playing. Closing program...')
+            time.sleep(4)
+            os.system('clear')
+            break
