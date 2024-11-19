@@ -2,61 +2,183 @@
 1. The user makes a choice.
 2. The computer makes a choice.
 3. A winner is displayed.
+
+add lizard and spock to the game
+shortened input - first character of each option. because scissors and spock 
+    both start with s, ask for two characters
+best of five
+pylint complaints
+code review
 '''
 
 import random
 import os
 import time
 
-VALID_CHOICES = ['rock', 'paper', 'scissors']
+BEST_OF_FIVE_ROUNDS = 3
+CLOSING_SECONDS = 8
+VALID_CHOICES = {'r': 'rock',
+                 'p': 'paper',
+                 'sc': 'scissors',
+                 'l': 'lizard',
+                 'sp': 'spock',
+                 }
+VALID_CHOICES_SHORTCUTS = list(VALID_CHOICES.keys())
+VALID_CHOICES_VALUES = list(VALID_CHOICES.values())
+WINNING_COMBOS = {'rock': ['scissors', 'lizard'], # key beats values
+                  'paper': ['rock', 'spock'],
+                  'scissors': ['paper', 'lizard'],
+                  'spock': ['scissors', 'rock'],
+                  'lizard': ['paper', 'spock'],
+                  }
 
-def determine_winner(player_choice, computer_choice):
+
+def player_chooses():
+    '''
+    Gets input from user, and reprompts for input if input was invalid
+    '''
+    # user chooses from valid choices
+    while True:
+        player_choice = input((f'==> Please choose one: '
+                            f'{', '.join(VALID_CHOICES_SHORTCUTS)} for'
+                            f' {', '.join(VALID_CHOICES_VALUES)}\n'))
+        player_choice = player_choice.lower()
+        if player_choice in VALID_CHOICES_SHORTCUTS:
+            break
+        print('==> That wasn\'t a valid choice.')
+
+    return player_choice
+
+
+def computer_chooses():
+    '''
+    Computer chooses randomly from available choices.
+    '''
+    return random.choice(VALID_CHOICES_VALUES)
+
+
+def display_choices(player_choice, computer_choice):
+    '''
+    Prints both user and computer choices to the console
+    '''
+    print(f'==> You chose {VALID_CHOICES[player_choice]}, the computer chose'
+          f' {computer_choice}.')
+
+def determine_round_winner(player_choice, computer_choice):
     '''
     Prints a message indicating who won (player or computer) depending on player
     and computer choices
+
+    returns a 1x2 list indicating the winner of that round
+    player wins:   [1, 0]
+    computer wins: [0, 1]
+    tie:           [0, 0]
     '''
-    # player win conditions
-    if ((player_choice == 'rock' and computer_choice == 'scissors') or
-        (player_choice == 'paper' and computer_choice == 'rock') or
-        (player_choice == 'scissors' and computer_choice == 'paper')):
-        print('You win!')
-    # computer win conditions
-    elif ((player_choice == 'rock' and computer_choice == 'paper') or
-        (player_choice == 'paper' and computer_choice == 'scissors') or
-        (player_choice == 'scissors' and computer_choice == 'rock')):
-        print('Computer wins!')
-    # tie
+
+    if player_choice == computer_choice:
+        print('==> That round ended in a tie!')
+        return [0, 0]
+    if computer_choice in WINNING_COMBOS[player_choice]:
+        print('==> You won the round!')
+        return [1, 0]
+    print('==> Computer won the round!')
+    return [0, 1]
+
+
+def tally_score(result, cumulative_results):
+    '''
+    Updates cumulative result with current result
+    '''
+    cumulative_results[0] += result[0]
+    cumulative_results[1] += result[1]
+
+
+def print_game_winner(cumulative_results):
+    '''
+    Prints game results, assuming game is concluding
+    '''
+    str_cumulative_results = list(map(str, cumulative_results))
+    if cumulative_results[0] > cumulative_results[1]:
+        print(f'==> You win the game {cumulative_results[0]}-'
+              f'{cumulative_results[1]}!')
+    elif cumulative_results[1] > cumulative_results[0]:
+        print(f'==> The computer wins the game {cumulative_results[1]}-'
+              f'{cumulative_results[0]}!')
     else:
-        print('It\'s a tie!')
+        print(f'==> You and the computer tied '
+              f'{'-'.join(str_cumulative_results)}!')
 
 
-# game
-while True:
-    os.system('clear')
+def won_best_of_five(cumulative_results):
+    '''
+    Returns True if computer or user won best of 5 (3 wins)
+    '''
+    if (BEST_OF_FIVE_ROUNDS in [cumulative_results[0],
+                                    cumulative_results[1]]):
+        return True
+    return False
 
-    # user chooses from valid choices
+
+def print_current_score(cumulative_results):
+    '''
+    Prints cumulative results
+    '''
+    print(f'==> The score is currently:\n==> You: {cumulative_results[0]} '
+                f'Computer: {cumulative_results[1]}')
+
+
+def play_again(cumulative_results):
+    '''
+    Prompt user to play again.
+    '''
     while True:
-        player_choice = input(f'==> Please choose one: '
-                            '{', '.join(VALID_CHOICES)}\n')
-        if player_choice in VALID_CHOICES:
-            break
-        print('That wasn\'t a valid choice.')
-
-    computer_choice = random.choice(VALID_CHOICES)
-
-    print(f'==> You chose {player_choice}, the computer chose {computer_choice}.')
-
-    determine_winner(player_choice, computer_choice)
-
-    # user decides whether to continue playing the game or to stop
-    while True:
+        print_current_score(cumulative_results)
         user_plays_again = input('==> Do you want to play again? y/n\n')
         if user_plays_again.lower() in ['y', 'n']:
-            break
-        print('Invalid input. Please enter y/n')
+            return user_plays_again.lower()
+        print('==> Invalid input. Please enter y/n')
 
-    if user_plays_again.lower() == 'n':
-        print('Thanks for playing. Closing program.')
-        time.sleep(1.5)
+
+def display_game_end_sequence(cumulative_results):
+    '''
+    Print final results and prepare to end game.
+    '''
+    print_game_winner(cumulative_results)
+    print('==> Thanks for playing. Closing program in...')
+    for second in range(CLOSING_SECONDS, -1, -1):
+        print(f'\r{second} seconds', end = '')
+        time.sleep(1)
+    print('\nGoodbye!')
+    time.sleep(1)
+    os.system('clear')
+
+
+def play_rock_paper_scissors():
+    '''
+    Main game logic
+    '''
+    cumulative_results = [0, 0]
+
+    # game
+    while True:
         os.system('clear')
-        break
+
+        player_choice = player_chooses()
+        computer_choice = computer_chooses()
+
+        display_choices(player_choice, computer_choice)
+
+        result = determine_round_winner(VALID_CHOICES[player_choice],
+                                        computer_choice)
+
+        tally_score(result, cumulative_results)
+
+        if won_best_of_five(cumulative_results):
+            display_game_end_sequence(cumulative_results)
+            break
+
+        if play_again(cumulative_results) == 'n':
+            display_game_end_sequence(cumulative_results)
+            break
+
+play_rock_paper_scissors()
